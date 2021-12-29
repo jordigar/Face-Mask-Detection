@@ -17,8 +17,7 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 	# grab the dimensions of the frame and then construct a blob
 	# from it
 	(h, w) = frame.shape[:2]
-	blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300),
-		(104.0, 177.0, 123.0))
+	blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300), (104.0, 177.0, 123.0))
 
 	# pass the blob through the network and obtain the face detections
 	faceNet.setInput(blob)
@@ -90,8 +89,7 @@ args = vars(ap.parse_args())
 # load our serialized face detector model from disk
 print("[INFO] loading face detector model...")
 prototxtPath = os.path.sep.join([args["face"], "deploy.prototxt"])
-weightsPath = os.path.sep.join([args["face"],
-	"res10_300x300_ssd_iter_140000.caffemodel"])
+weightsPath = os.path.sep.join([args["face"], "res10_300x300_ssd_iter_140000.caffemodel"])
 faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 
 # load the face mask detector model from disk
@@ -100,7 +98,9 @@ maskNet = load_model(args["model"])
 
 # initialize the video stream and allow the camera sensor to warm up
 print("[INFO] starting video stream...")
-vs = VideoStream(src=0).start()
+#vs = VideoStream(src=0).start()
+vs = VideoStream("rtsp://admin:zxcv1234@172.18.11.5:554/Streaming/Channels/101/").start()
+#vs = cv2.VideoCapture("rtsp://admin:zxcv1234@172.18.11.5:554/Streaming/Channels/101/")     #si poso IP .05 per comptes de .5 no funciona!!
 time.sleep(2.0)
 
 # loop over the frames from the video stream
@@ -108,7 +108,7 @@ while True:
 	# grab the frame from the threaded video stream and resize it
 	# to have a maximum width of 400 pixels
 	frame = vs.read()
-	frame = imutils.resize(frame, width=400)
+	#frame = imutils.resize(frame, width=400)
 
 	# detect faces in the frame and determine if they are wearing a
 	# face mask or not

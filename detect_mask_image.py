@@ -42,8 +42,7 @@ def mask_image():
 	(h, w) = image.shape[:2]
 
 	# construct a blob from the image
-	blob = cv2.dnn.blobFromImage(image, 1.0, (300, 300),
-		(104.0, 177.0, 123.0))
+	blob = cv2.dnn.blobFromImage(image, 1.0, (300, 300), (104.0, 177.0, 123.0))
 
 	# pass the blob through the network and obtain the face detections
 	print("[INFO] computing face detections...")
